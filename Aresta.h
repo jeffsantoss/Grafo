@@ -7,11 +7,15 @@
 typedef struct aresta Aresta;
 
 Aresta*		newAresta(char *chave, Vertice *v1, Vertice *v2, float peso);
-void		setPesoAresta(Aresta *a, float novoValor);
 void		DestruirAresta(Aresta *aresta);
-char*		ChaveAresta(Aresta *aresta);
-Vertice**	VerticeOrgDest(Aresta *aresta);
+
+void		setPesoAresta(Aresta *a, float novoValor);
 float		PesoAresta(Aresta *a);
+
+char*		ChaveAresta(Aresta *aresta);
+
+Vertice**	VerticeOrgDest(Aresta *aresta);
 void		ImprimeAresta(Aresta *aresta);
+
 
 #endif
