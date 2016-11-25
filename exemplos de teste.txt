@@ -1,0 +1,127 @@
+// VIA ARQUIVO //
+CV v1
+CV v2
+CV v3
+CV v4
+CV v5
+CV v6
+CV v7
+CV v8
+CV v9
+CV v10
+CV v11
+CV v12
+CV v13
+CV v14
+CA a1 v1 v5 5 
+CA a2 v1 v6 1
+CA a3 v1 v12 2
+CA a4 v2 v3 11
+CA a5 v2 v5 1
+CA a6 v2 v9 9
+CA a7 v3 v4 3
+CA a8 v3 v6 3
+CA a9 v3 v7 5
+CA a10 v3 v10 6
+CA a11 v4 v17 4
+CA a12 v4 v14 5
+CA a13 v5 v8 8
+CA a14 v6 v7 1
+CA a15 v6 v9 10
+CA a16 v6 v13 4
+CA a17 v8 v9 10
+CA a18 v8 v13 4
+CA a19 v10 v11 13
+CA a20 v10 v12 8
+CA a21 v11 v13 9
+CA a22 v11 v14 6
+CM v1 v14
+IG
+
+
+// VIA CONSOLE // 
+
+
+Grafo *grafo = newGrafo();
+	//LeituraArquivo(grafo);
+	
+	Vertice *v1 = newVertice("v1");
+	Vertice *v2 = newVertice("v2");
+	Vertice *v3 = newVertice("v3");
+	Vertice *v4 = newVertice("v4");
+	Vertice *v5 = newVertice("v5");
+	Vertice *v6 = newVertice("v6");
+	Vertice *v7 = newVertice("v7");
+	Vertice *v8 = newVertice("v8");
+	Vertice *v9 = newVertice("v9");
+	Vertice *v10 = newVertice("v10");
+	Vertice *v11 = newVertice("v11");
+	Vertice *v12 = newVertice("v12");
+	Vertice *v13 = newVertice("v13");
+	Vertice *v14 = newVertice("v14");
+
+	Aresta *edge1_5 = newAresta("a1", v1, v5, 5);
+	Aresta *edge1_6 = newAresta("a2", v1, v6, 1);
+	Aresta *edge1_12 = newAresta("a3", v1, v12, 2);
+	Aresta *edge2_3 = newAresta("a4", v2, v3, 11);
+	Aresta *edge2_5 = newAresta("a5", v2, v5, 1);
+	Aresta *edge2_9 = newAresta("a6", v2, v9, 9);
+	Aresta *edge3_4 = newAresta("a7", v3, v4, 3);
+	Aresta *edge3_6 = newAresta("a8", v3, v6, 3);
+	Aresta *edge3_7 = newAresta("a9", v3, v7, 5);
+	Aresta *edge3_10 = newAresta("a10", v3, v10, 6);
+	Aresta *edge4_7 = newAresta("a11", v4, v7, 4);
+	Aresta *edge4_14 = newAresta("a12", v4, v14, 5);
+	Aresta *edge5_8 = newAresta("a13", v5, v8, 8);
+	Aresta *edge6_7 = newAresta("a14", v6, v7, 1);
+	Aresta *edge6_9 = newAresta("a15", v6, v9, 6);
+	Aresta *edge6_13 = newAresta("a16", v6, v13, 4);
+	Aresta *edge8_9 = newAresta("a17", v8, v9, 10);
+	Aresta *edge8_13 = newAresta("a18", v8, v13, 7);
+	Aresta *edge10_11 = newAresta("a19", v10, v11, 13);
+	Aresta *edge10_12 = newAresta("a20", v10, v12, 8);
+	Aresta *edge11_13 = newAresta("a21", v11, v13, 9);
+	Aresta *edge11_14 = newAresta("a22", v11, v14, 6);
+
+	InserirVertice(grafo, v1);
+	InserirVertice(grafo, v2);
+	InserirVertice(grafo, v3);
+	InserirVertice(grafo, v4);
+	InserirVertice(grafo, v5);
+	InserirVertice(grafo, v6);
+	InserirVertice(grafo, v7);
+	InserirVertice(grafo, v8);
+	InserirVertice(grafo, v9);
+	InserirVertice(grafo, v10);
+	InserirVertice(grafo, v11);
+	InserirVertice(grafo, v12);
+	InserirVertice(grafo, v13);
+	InserirVertice(grafo, v14);
+
+	InserirAresta(grafo, edge1_5);
+	InserirAresta(grafo, edge1_6);
+	InserirAresta(grafo, edge1_12);
+	InserirAresta(grafo, edge2_3);
+	InserirAresta(grafo, edge2_5);
+	InserirAresta(grafo, edge2_9);
+	InserirAresta(grafo, edge3_4);
+	InserirAresta(grafo, edge3_6);
+	InserirAresta(grafo, edge3_7);
+	InserirAresta(grafo, edge3_10);
+	InserirAresta(grafo, edge4_7);
+	InserirAresta(grafo, edge4_14);
+	InserirAresta(grafo, edge5_8);
+	InserirAresta(grafo, edge6_7);
+	InserirAresta(grafo, edge6_9);
+	InserirAresta(grafo, edge6_13);
+	InserirAresta(grafo, edge8_9);
+	InserirAresta(grafo, edge8_13);
+	InserirAresta(grafo, edge10_11);
+	InserirAresta(grafo, edge10_12);
+	InserirAresta(grafo, edge11_13);
+	InserirAresta(grafo, edge11_14);
+
+	
+	ImprimeGrafo(grafo);
+
+	CaminhoMinimo(grafo, v1, v14);

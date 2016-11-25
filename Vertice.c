@@ -1,4 +1,7 @@
+#define _CRT_SECURE_NO_WARNINGS
+
 #include "Vertice.h"
+#include <string.h>
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -13,7 +16,10 @@ struct vertice
 Vertice* newVertice(char *chave)
 {
 	Vertice *vertice = (Vertice*)malloc(sizeof(Vertice));
-	vertice->chave = chave;
+
+	vertice->chave = (char*)malloc(20*sizeof(chave));
+
+	strcpy(vertice->chave,chave);
 	vertice->peso = INFINITY;
 	vertice->pred = NULL;
 	
@@ -25,10 +31,12 @@ void DestruirVertice(Vertice *v) {
 	if (v == NULL)
 		return;
 
+	free(v->pred);
+	free(v->chave);
 	free(v);
 }
 
-char ChaveVertice(Vertice *v) {
+char* ChaveVertice(Vertice *v) {
 
 	if (v == NULL)
 		return -1;
@@ -74,7 +82,7 @@ void ImprimeVertice(Vertice *v)
 	}
 
 	printf(" \n"
-		"Chave : %s \n"
-		"Peso : %f \n",
+		"\t Identificador :	( %s ) \n"
+		"\t          Peso :	( %.1f ) \n",
 		v->chave, PesoVertice(v));
 }

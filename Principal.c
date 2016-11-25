@@ -1,3 +1,5 @@
+#define _CRT_SECURE_NO_WARNINGS
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -5,12 +7,15 @@
 #include "Aresta.h"
 #include "Vertice.h"
 
+
 #define _VERTICE_ORIG 0
 #define _VERTICE_DEST 1
+#define _SIZE_FILE 9999
 
 void Relaxamento(Grafo *grafo, Vertice *org, Vertice *dest) {
 	
 	float distc = 0;
+
 	Aresta *aresta = GetAresta(grafo, org, dest);
 
 	distc = PesoVertice(org) + PesoAresta(aresta);
@@ -26,13 +31,20 @@ void Relaxamento(Grafo *grafo, Vertice *org, Vertice *dest) {
 
 void CaminhoMinimo(Grafo *grafo,Vertice *org, Vertice *dest){
 
-	Aresta **arestasGrafo = GetArestas(grafo);
-		
+	int i = 0,
+		j = 0,
+		k = 0,
+		z = 0;
+
+	Vertice **CaminhoMinimo = (Vertice**)malloc(Qtd_Vertices() * sizeof(Vertice*));
+	Aresta  **arestasGrafo = GetArestas(grafo);
+	Vertice *aux = dest;
+
 	setPesoVertice(org, 0);
 
-	for (int i = 0; i <  Qtd_Vertices() - 1 ; i++)
+	for (i = 0; i <  Qtd_Vertices() - 1 ; i++)
 
-		for (int j = 0; j < Qtd_Arestas(); j++) {
+		for (j = 0; j < Qtd_Arestas(); j++) {
 
 			Vertice **vertices = VerticeOrgDest(arestasGrafo[j]);
 
@@ -41,101 +53,296 @@ void CaminhoMinimo(Grafo *grafo,Vertice *org, Vertice *dest){
 		}
 
 
-	for (Vertice *v = dest; v != NULL; v = getPredecessor(v))
-		printf("Chave: %c \n",ChaveVertice(v));
+	while (aux != NULL) {
 
-	printf("Custo: %f ", PesoVertice(dest));
+		CaminhoMinimo[z] = aux;
+		aux = getPredecessor(aux);
+		z++;
+
+	}
+
+	printf("\n >> Algoritmo utilizado - Beelman Ford");
+
+	printf("\n >> Menor caminho do vertice (%s) ao (%s): ", ChaveVertice(org) , ChaveVertice(dest));
+
+	for (k = z - 1; k >= 0; k--) {
+		printf(" %s - ", ChaveVertice(CaminhoMinimo[k]));
+	}
+
+
+	printf("\n >> Custo: ( %.2f ) \n", PesoVertice(dest));
 
 }
 
-int main() {
+void LerComando(Grafo *grafo,char *comando) {
 
-	Grafo *graph = newGrafo();
+	if (comando == NULL || grafo == NULL) {
+		printf("Ocorreu um erro!");
+		return;
+	}
 
-	Vertice *v1 = newVertice('A');
-	Vertice *v2 = newVertice('B');
-	Vertice *v3 = newVertice('C');
-	Vertice *v4 = newVertice('D');
-	Vertice *v5 = newVertice('E');
-	Vertice *v6 = newVertice('F');
-	Vertice *v7 = newVertice('G');
-	Vertice *v8 = newVertice('H');
-	Vertice *v9 = newVertice('I');
-	Vertice *v10 = newVertice('J');
-	Vertice *v11 = newVertice('K');
-	Vertice *v12 = newVertice('L');
-	Vertice *v13 = newVertice('M');
-	Vertice *v14 = newVertice('N');
+	char *syntax;
 
-	Aresta *edge1_5 = newAresta(101, v1, v5, 5);
-	Aresta *edge1_6 = newAresta(102, v1, v6, 1);
-	Aresta *edge1_12 = newAresta(103, v1, v12, 2);
-	Aresta *edge2_3 = newAresta(104, v2, v3, 11);
-	Aresta *edge2_5 = newAresta(105, v2, v5, 1);
-	Aresta *edge2_9 = newAresta(106, v2, v9, 9);
-	Aresta *edge3_4 = newAresta(107, v3, v4, 3);
-	Aresta *edge3_6 = newAresta(108, v3, v6, 3);
-	Aresta *edge3_7 = newAresta(109, v3, v7, 5);
-	Aresta *edge3_10 = newAresta(110, v3, v10, 6);
-	Aresta *edge4_7 = newAresta(111, v4, v7, 4);
-	Aresta *edge4_14 = newAresta(112, v4, v14, 5);
-	Aresta *edge5_8 = newAresta(113, v5, v8, 8);
-	Aresta *edge6_7 = newAresta(114, v6, v7, 1);
-	Aresta *edge6_9 = newAresta(115, v6, v9, 6);
-	Aresta *edge6_13 = newAresta(116, v6, v13, 4);
-	Aresta *edge8_9 = newAresta(117, v8, v9, 10);
-	Aresta *edge8_13 = newAresta(118, v8, v13, 7);
-	Aresta *edge10_11 = newAresta(119, v10, v11, 13);
-	Aresta *edge10_12 = newAresta(120, v10, v12, 8);
-	Aresta *edge11_13 = newAresta(121, v11, v13, 9);
-	Aresta *edge11_14 = newAresta(122, v11, v14, 6);
+	if(comando[strlen(comando) - 1] = '\n');
+	comando[strlen(comando) - 1] = '\0';
 
-	InserirVertice(graph, v1);
-	InserirVertice(graph, v2);
-	InserirVertice(graph, v3);
-	InserirVertice(graph, v4);
-	InserirVertice(graph, v5);
-	InserirVertice(graph, v6);
-	InserirVertice(graph, v7);
-	InserirVertice(graph, v8);
-	InserirVertice(graph, v9);
-	InserirVertice(graph, v10);
-	InserirVertice(graph, v11);
-	InserirVertice(graph, v12);
-	InserirVertice(graph, v13);
-	InserirVertice(graph, v14);
+	syntax = strtok(comando, " ");
 
-	InserirAresta(graph, edge1_5);
-	InserirAresta(graph, edge1_6);
-	InserirAresta(graph, edge1_12);
-	InserirAresta(graph, edge2_3);
-	InserirAresta(graph, edge2_5);
-	InserirAresta(graph, edge2_9);
-	InserirAresta(graph, edge3_4);
-	InserirAresta(graph, edge3_6);
-	InserirAresta(graph, edge3_7);
-	InserirAresta(graph, edge3_10);
-	InserirAresta(graph, edge4_7);
-	InserirAresta(graph, edge4_14);
-	InserirAresta(graph, edge5_8);
-	InserirAresta(graph, edge6_7);
-	InserirAresta(graph, edge6_9);
-	InserirAresta(graph, edge6_13);
-	InserirAresta(graph, edge8_9);
-	InserirAresta(graph, edge8_13);
-	InserirAresta(graph, edge10_11);
-	InserirAresta(graph, edge10_12);
-	InserirAresta(graph, edge11_13);
-	InserirAresta(graph, edge11_14);
+	if (syntax == NULL)
+		return;
+
+	else if (!strcmp(syntax, "CV")) {
+
+		const char *valorinserido = strtok(NULL, " ");
+
+		if (VerticeExiste(grafo, valorinserido)) {
+			printf("Vertice ja existente\n");
+			return;
+		}
+
+		Vertice *verticeInserido = newVertice(valorinserido);
+
+		InserirVertice(grafo, verticeInserido);
+		printf("\n >> Vertice (%s) criado com sucesso \n", valorinserido);
+		return;		
+	} 
+	else if (!strcmp(syntax, "RV")) {
+
+		const char *valorremovido = strtok(NULL, " ");
+
+		Vertice *verticeremovido = GetVerticePorChave(grafo, valorremovido);
+
+		if (verticeremovido == NULL) {
+			printf("Vertice nao encontrado");
+			return;
+		}
+
+			RemoverVertice(grafo, verticeremovido);
+
+			printf("\n >> Vertice (%s) removido com sucesso", valorremovido);
+			return;
+
+	} 
+	else if (!strcmp(syntax, "RA")) {
+
+		char *valorremovido = strtok(NULL, " ");
+
+		Aresta *arestaremovida = GetArestaPorChave(grafo, valorremovido);
+
+		if (arestaremovida == NULL) {
+			printf("\nAresta nao encontrada");
+			return;
+		}
+
+		RemoverAresta(grafo, arestaremovida);
+		printf("\n >> Aresta (%s) removida com sucesso", valorremovido);
+		return;
+
+	}	
+	else if (!strcmp(syntax, "CA")) {
+
+		const char *valoreinserido = strtok(NULL, " ");
+		const char *verticeOrigem  = strtok(NULL, " ");
+		const char *verticeDestino = strtok(NULL, " ");
+		const char *arestaPeso     = strtok(NULL," ");
+
+		Vertice *VerticeOrig = GetVerticePorChave(grafo, verticeOrigem);
+		Vertice *VerticeDest = GetVerticePorChave(grafo, verticeDestino);
 
 
-	ImprimeGrafo(graph);
+		if (VerticeOrig == NULL || VerticeDest == NULL) {
+			printf("\nVertices nao encontrados!");
+			return;
+		} else if (ArestaExiste(grafo, valoreinserido)) {
+			printf("\nAresta ja existente");
+			return;
+		}
 
-	printf("\n\n Caminho minimo >> ");
+		Aresta *aresta = newAresta(valoreinserido, VerticeOrig, VerticeDest, atof(arestaPeso));
 
-	CaminhoMinimo(graph, v1, v14);
 
-	printf("ok");
+		InserirAresta(grafo,aresta);
+
+			printf("\n >> Aresta (%s) com peso (%.1f) coicidindo os vertices (%s) e (%s) "
+				   "inserido no grafo com sucesso! \n",
+						valoreinserido, (float)atof(arestaPeso),
+						verticeOrigem, verticeDestino);
+			return;
+		
+	} 
+	else if (!strcmp(syntax, "IG")) {
+
+		ImprimeGrafo(grafo);
+
+		return;
+
+	} 
+	else if (!strcmp(syntax, "TA")) {
+
+		const char *valorAresta = strtok(NULL, " ");
+		const char *novoPesoAresta = strtok(NULL, " ");
+		Aresta *aresta = GetArestaPorChave(grafo, valorAresta);
+		
+		if (aresta == NULL) {
+			printf("Aresta (%s) nao encontrada! ", valorAresta);
+			return;
+		}
+
+		float pesoantigo = PesoAresta(aresta);
+	
+		setPesoAresta(aresta, atof(novoPesoAresta));
+
+		printf("Peso (%f) da aresta (%s) alterado para (%f)",
+				pesoantigo, valorAresta, PesoAresta(aresta));
+
+		return;
+	} 
+	else if (!strcmp(syntax, "CM")) {
+		
+		const char *verticeOrigem = strtok(NULL, " ");
+		const char *verticeDestino = strtok(NULL, " ");
+
+		Vertice *VerticeOrig = GetVerticePorChave(grafo, verticeOrigem);
+		Vertice *VerticeDest = GetVerticePorChave(grafo, verticeDestino);
+
+		if (VerticeOrig == NULL || VerticeDest == NULL) {
+			printf("Um dos vertices nao encontrados!");
+				return;
+		}
+
+		CaminhoMinimo(grafo, VerticeOrig, VerticeDest);
+
+		return;
+	}
+	else if (!strcmp(syntax, "FM")) {
+
+		DestruirGrafo(grafo);
+
+		printf("\t\t >> Grafo destruido! Encerrando programa.. ");
+			system("pause");
+				exit(1);
+					return;
+
+	} 
+	else if (!strcmp(syntax, "exit")) {
+		return Menu(grafo);
+	}
+	else if (!strcmp(syntax, "?")) {
+		printf("\n \t\t    CV v Cria um vertice com o identificador v"
+			"\n\n \t\t    RV v Remove o vertice identificado por v"
+			"\n\n \t\t    CA a v1 v2 x Cria uma aresta com o identificador a incidindo nos vertices de identificadores v1 e v2"
+			"O valor armazenado na aresta e um numero inteiro especificado por x"
+			"\n\n \t\t    RA a Remove a aresta identificada por a"
+			"\n\n \t\t    TA a x Troca o valor armazenado na aresta de identificador a pelo valor x"
+			"\n\n \t\t    IG imprime o grafo"
+			"\n\n \t\t  CM v1 v2 Determina e imprime o caminho minimo entre o vertice"
+			"de identificador v1 e o vertice de identificador v2. "
+			"\n\n \t\t    FM Termina a execucao do seu programa e destroi o grafo "
+			"\n\n \t\t    exit retorna ao menu");
+
+
+	}
+
+	printf("Comando invalido!");
+}
+
+void Arquivo(Grafo *grafo) {
+
+	char *nomeArquivo = (char*)malloc(20 * sizeof(char));
+
+	char info[_SIZE_FILE];
+
+	//printf(">> Nome do arquivo: ");
+
+	//gets(nomeArquivo);
+
+	FILE *arq;
+
+	arq = fopen("arquivoGrafo.txt", "r");
+
+	if (!arq)
+		printf("não foi possivel abrir o arquivo (%s)", nomeArquivo);
+	else
+		while ((fgets(info, sizeof(info), arq)) != NULL) {
+			LerComando(grafo, info);
+		}
+
+	
+	fclose(arq);
+
+	system("pause");
+
+	return Menu(grafo);
+}
+
+void Comando(Grafo *grafo) {
+
+		char *entrada = malloc(50 * sizeof(char));
+
+		while (true) {
+
+		system("cls");
+
+		printf("< '?' para ver a syntax > \n");
+
+		printf("\n \t Comando >> ");
+
+		fgets(entrada, 20, stdin);
+
+		LerComando(grafo, entrada);
+
+		getch();
+
+	}
+}
+
+int Menu(Grafo *grafo) {
+
+	int op;
+
+	system("cls");
+
+	printf("\n\t |=============================  FACULDADE FARIAS BRITO =====================================|\n"
+		"\t |==============================  ESTRUTURA DE DADOS II  ====================================|\n"
+		"\t |=====================================  GRAFOS  ============================================|\n");
+	
+
+
+	printf("\n\t\t\t\t     Escolha uma das opcoes abaixo! \n"
+		"\n \t\t\t\t	1 - Entrada por aquivo"
+		"\n \t\t\t\t	2 - Entrada por comando \n");
+
+	printf("\n\n\t\t\t\t Digite aqui:  ");
+	scanf("%d", &op);
+
+	while (op < 1 || op > 2)
+	{
+		printf("\n\n\t\t\t\tEscolha uma opcao valida: ");
+		scanf("%d", &op);
+		fflush(stdin);
+	}
+
+	switch (op) {
+
+	case 1: Arquivo(grafo);	break;
+	case 2: Comando(grafo); break;
+
+	default:
+		return Menu(grafo);
+	}
+}
+
+
+void main() {
+
+	system("color 0A");
+	system("title Estrutura de dados Grafo");
+
+	Grafo *grafo = newGrafo();
+
+	Menu(grafo);
+
+	printf("Programa abortado!");
+
 	getch();
-
 }

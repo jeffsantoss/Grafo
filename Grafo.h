@@ -17,8 +17,12 @@ void		RemoverVertice(Grafo *G, Vertice *V);
 void		RemoverAresta(Grafo *G, Aresta *aresta);
 Vertice*	GetVertice(Grafo *G, Vertice *v);
 Vertice**	GetVertices(Grafo *G);
+Vertice*	GetVerticePorChave(Grafo *G, char *chave);
+Aresta*		GetArestaPorChave(Grafo *G, char *chave);
 Aresta**	GetArestas(Grafo *G);
 Aresta*		GetAresta(Grafo *G, Vertice *v1, Vertice *v2);
 void		ImprimeGrafo(Grafo *G);
+bool		VerticeExiste(Grafo *G, char *chave);
+bool		ArestaExiste(Grafo *G, char *chave);
 
 #endif

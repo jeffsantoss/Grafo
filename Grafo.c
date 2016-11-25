@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include <string.h>
 #include <math.h>
 #include "Grafo.h"
 #include "Vertice.h"
@@ -52,9 +53,16 @@ void DestruirGrafo(Grafo *G)
 	for (i = 0; i < _QTD_ARESTAS; i++)
 		DestruirAresta(G->arestas[i]);
 
+	_QTD_VERTICES = 0;
+	_QTD_ARESTAS = 0;
+	_QTD_MAX_VERTICES = 4;
+	_QTD_MAX_ARESTAS = 4;
+
 	free(G->vertices);
 	free(G->arestas);
 	free(G);
+
+
 }
 
 int Qtd_Vertices()
@@ -69,18 +77,12 @@ int Qtd_Arestas()
 
 void InserirVertice(Grafo *G, Vertice *v)
 {
-	char chaveVertice = ChaveVertice(v),
-		i = 0;
 
 	if (G == NULL || v == NULL)
 		return;
 
-	for (i = 0; i < _QTD_VERTICES; i++) {
-		if (ChaveVertice(G->vertices[i]) == chaveVertice)
-			return;
-		else
-			continue;
-	}
+	if (VerticeExiste(G, ChaveVertice(v)))
+		return;
 
 	Vertice **novo = G->vertices;
 
@@ -100,6 +102,9 @@ void InserirVertice(Grafo *G, Vertice *v)
 void InserirAresta(Grafo *G, Aresta *aresta)
 {
 	if (G == NULL || aresta == NULL)
+		return;
+
+	if (ArestaExiste(G, ChaveVertice(aresta)))
 		return;
 
 	Aresta **novo = G->arestas;
@@ -128,7 +133,7 @@ void RemoverVertice(Grafo *G, Vertice *V) {
 			for (int j = i; j < _QTD_VERTICES - 1; j++)
 				G->vertices[j] = G->vertices[j + 1];
 
-			--_QTD_ARESTAS;
+			--_QTD_VERTICES;
 				G->vertices[_QTD_VERTICES] = NULL;
 					break;
 		}
@@ -189,6 +194,41 @@ Vertice* GetVertice(Grafo *G,Vertice *v) {
 		return NULL;	
 }
 
+Vertice* GetVerticePorChave(Grafo *G, char *chave) {
+
+	if (chave == NULL) {
+		printf("chave nao encontrada");
+		return;
+	}
+
+	if (G != NULL) {
+
+		for (int i = 0;i < _QTD_VERTICES;i++) {
+			if (!strcmp((ChaveVertice(G->vertices[i])),chave)) {
+				return G->vertices[i];
+			}
+		}
+	}
+
+	return NULL;
+}
+
+
+Aresta* GetArestaPorChave(Grafo *G, char *chave) {
+
+	if (G != NULL) {
+
+		for (int i = 0;i < _QTD_ARESTAS;i++) {
+			if (!strcmp((ChaveAresta(G->arestas[i])), chave)) {
+				return G->arestas[i];
+			}
+		}
+	}
+
+	return NULL;
+}
+
+
 // retorna todos os vértices do G.
 Vertice** GetVertices(Grafo *G) {
 	if (G != NULL)
@@ -205,28 +245,64 @@ Aresta** GetArestas(Grafo *G) {
 	return NULL;
 }
 
+bool VerticeExiste(Grafo *G,char *chave) {
+
+	if (G != NULL) {
+		for (int i = 0;i < _QTD_VERTICES;i++) {
+			if (!(strcmp(ChaveVertice(G->vertices[i]),chave))){
+				return true;
+			}
+		}
+	}
+
+	return false;
+}
+
+
+
+bool ArestaExiste(Grafo *G, char *chave) {
+
+	if (G != NULL) {
+		for (int i = 0;i < _QTD_ARESTAS;i++) {
+			if (!(strcmp(ChaveAresta(G->arestas[i]), chave))) {
+				return true;
+			}
+		}
+	}
+
+	return false;
+}
+
 void ImprimeGrafo(Grafo *G) {
 
 	int i = 0;
 	if (G == NULL) {
-		printf("G está vazio!");
+		printf("Grafo está vazio!");
 		return;
 	}
 
 	else {
 
-		printf("\n   Print do G: \n\n"
-			"Quantidade de vértices: %d \n"
-			"Quantidade de Arestas: %d \n",
+		printf("\n\t\t Dados do grafo: \n\n"
+			"\tQuantidade de vertices :	( %d )\n"
+			"\tQuantidade de arestas  :	( %d ) \n",
 			_QTD_VERTICES,_QTD_ARESTAS );
 
-		printf(" Print dos Vertices: \n\n");
+		printf("\n\t\tDados dos Vertices presentes no grafo: \n");
 		for (i = 0;i < _QTD_VERTICES; i++)
 			ImprimeVertice(G->vertices[i]);
 
-		printf(" Print das Arestas: \n\n");
+		if (i == 0)
+			printf("\n\t\t O grafo nao contem vertices! \n");
+
+		printf("\n\t\tDados das arestas presentes no grafo: \n");
+	
 		for (i = 0;i < _QTD_ARESTAS; i++)
 			ImprimeAresta(G->arestas[i]);
+
+		if (i == 0)
+			printf("\n\t\t O grafo nao contem arestas! \n");
+
 	}
 
 }
