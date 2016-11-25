@@ -158,7 +158,7 @@ void LerComando(Grafo *grafo, char *comando) {
 			return;
 		}
 
-		Aresta *aresta = newAresta(valoreinserido, VerticeOrig, VerticeDest, atof(arestaPeso));
+		Aresta *aresta = newAresta(valoreinserido, VerticeOrig, VerticeDest, (float)atof(arestaPeso));
 
 
 		InserirAresta(grafo, aresta);
@@ -190,7 +190,7 @@ void LerComando(Grafo *grafo, char *comando) {
 
 		float pesoantigo = PesoAresta(aresta);
 
-		setPesoAresta(aresta, atof(novoPesoAresta));
+		setPesoAresta(aresta, (float)atof(novoPesoAresta));
 
 		printf("Peso (%f) da aresta (%s) alterado para (%f)",
 			pesoantigo, valorAresta, PesoAresta(aresta));
@@ -246,7 +246,7 @@ void LerComando(Grafo *grafo, char *comando) {
 	printf("Comando invalido!");
 }
 
-void Arquivo(Grafo *grafo) {
+int Arquivo(Grafo *grafo) {
 
 	char *nomeArquivo = (char*)malloc(20 * sizeof(char));
 
@@ -258,11 +258,18 @@ void Arquivo(Grafo *grafo) {
 
 	FILE *arq;
 
+
+
 	arq = fopen("arquivoGrafo.txt", "r");
+
+	strcpy(nomeArquivo, "arquivoGrafo.txt");
 
 	if (!arq)
 		printf("não foi possivel abrir o arquivo (%s)", nomeArquivo);
 	else
+
+		printf("\n\t  >> LENDO ARQUIVO %s.. \n", nomeArquivo);
+
 		while ((fgets(info, sizeof(info), arq)) != NULL) {
 			LerComando(grafo, info);
 		}
@@ -302,9 +309,11 @@ int Menu(Grafo *grafo) {
 
 	system("cls");
 
-	printf("\n\t |=============================  FACULDADE FARIAS BRITO =====================================|\n"
+	printf("\t |================== DESENVOLVEDORES: JEFFERSON SANTOS & ARTUR LIMA  ========================|\n"
+	    "\t |=============================  FACULDADE FARIAS BRITO =====================================|\n"
 		"\t |==============================  ESTRUTURA DE DADOS II  ====================================|\n"
 		"\t |=====================================  GRAFOS  ============================================|\n");
+
 
 
 
@@ -330,4 +339,6 @@ int Menu(Grafo *grafo) {
 	default:
 		return Menu(grafo);
 	}
+
+	return 0;
 }

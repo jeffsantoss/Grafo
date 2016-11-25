@@ -126,6 +126,23 @@ void RemoverVertice(Grafo *G, Vertice *V) {
 	if (G == NULL || V == NULL)
 		return;
 
+	// excluo todas as aretas que esse vertice ta presente
+	for (int j = 0; j < _QTD_ARESTAS; j++) {
+
+		Vertice **org_dest = VerticeOrgDest(G->arestas[j]);
+
+
+
+		if (org_dest[_VERTICE_ORIG] == V || org_dest[_VERTICE_DEST] == V) {
+
+			printf("\n\t >> Aresta (%s) tambem foi excluida por coicidir no vertice (%s)",
+				ChaveAresta(G->arestas[j]),ChaveVertice(V));
+
+				RemoverAresta(G, G->arestas[j]);
+		}
+
+	}
+
 	for (int i = 0; i < _QTD_VERTICES; i++) {
 		if (G->vertices[i] == V) {
 
