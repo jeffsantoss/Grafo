@@ -111,14 +111,15 @@ void InserirAresta(Grafo *G, Aresta *aresta)
 
 	if (_QTD_ARESTAS == _QTD_MAX_ARESTAS)
 	{
-		novo = (Aresta**)realloc(novo,_QTD_MAX_ARESTAS * 4 * sizeof(Aresta*));
-		
+		novo = (Aresta**)realloc(novo, _QTD_MAX_ARESTAS * 4 * sizeof(Aresta*));
+
 		G->arestas = novo;
 
 		_QTD_MAX_ARESTAS *= 4;
 	}
 
-	G->arestas[_QTD_ARESTAS++] = aresta;
+		G->arestas[_QTD_ARESTAS++] = aresta;
+	
 }
 
 void RemoverVertice(Grafo *G, Vertice *V) {
@@ -135,7 +136,7 @@ void RemoverVertice(Grafo *G, Vertice *V) {
 
 		if (org_dest[_VERTICE_ORIG] == V || org_dest[_VERTICE_DEST] == V) {
 
-			printf("\n\t >> Aresta (%s) tambem foi excluida por coicidir no vertice (%s)",
+			printf("\n >> Aresta (%s) tambem foi excluida por coincidir no vertice (%s) ",
 				ChaveAresta(G->arestas[j]),ChaveVertice(V));
 
 				RemoverAresta(G, G->arestas[j]);
@@ -230,7 +231,6 @@ Vertice* GetVerticePorChave(Grafo *G, char *chave) {
 	return NULL;
 }
 
-
 Aresta* GetArestaPorChave(Grafo *G, char *chave) {
 
 	if (G != NULL) {
@@ -275,8 +275,6 @@ bool VerticeExiste(Grafo *G,char *chave) {
 	return false;
 }
 
-
-
 bool ArestaExiste(Grafo *G, char *chave) {
 
 	if (G != NULL) {
@@ -290,9 +288,62 @@ bool ArestaExiste(Grafo *G, char *chave) {
 	return false;
 }
 
+
+
+void OrdenarVertices(Grafo *G)
+{
+	Vertice *aux;
+
+	for (int i = 0; i < _QTD_VERTICES; i++)
+	{
+		for (int j = i + 1; j < _QTD_VERTICES; j++)
+		{
+			// i > j
+			if ((strcmp(ChaveVertice(G->vertices[i]), ChaveAresta(G->vertices[j]))  >  0))
+
+			{
+				aux = G->vertices[i];
+				G->vertices[i] = G->vertices[j];
+				G->vertices[j] = aux;
+
+			}
+		}
+	}
+
+
+	//printf("\n\t Vertices Ordenados com sucesso! \n");
+}
+
+void OrdenarArestas(Grafo *G)
+{
+	Aresta *aux;
+
+	for (int i = 0; i < _QTD_ARESTAS ; i++)
+	{
+		for (int j = i + 1; j < _QTD_ARESTAS; j++)
+		{
+			// i > j
+			if ( (strcmp(ChaveAresta(G->arestas[i]), ChaveAresta(G->arestas[j]))  >  0 ))
+
+			{
+				aux = G->arestas[i];
+				G->arestas[i] = G->arestas[j];
+				G->arestas[j] = aux;
+
+			}
+		}
+	}
+
+
+
+	//printf("\n\t Arestas Ordenadas com sucesso! \n");
+}
+
+
 void ImprimeGrafo(Grafo *G) {
 
-	int i = 0;
+	int i = 0,
+		j = 0;
 	if (G == NULL) {
 		printf("Grafo está vazio!");
 		return;
@@ -305,15 +356,22 @@ void ImprimeGrafo(Grafo *G) {
 			"\tQuantidade de arestas  :	( %d ) \n",
 			_QTD_VERTICES,_QTD_ARESTAS );
 
-		printf("\n\t\tDados dos Vertices presentes no grafo: \n");
-		for (i = 0;i < _QTD_VERTICES; i++)
+		printf("\n\t\tDados dos Vertices presentes no grafo em ordem! \n");
+
+		OrdenarVertices(G);
+
+		for (i = 0;i < _QTD_VERTICES; i++) {
 			ImprimeVertice(G->vertices[i]);
+
+		}
 
 		if (i == 0)
 			printf("\n\t\t O grafo nao contem vertices! \n");
 
 		printf("\n\t\tDados das arestas presentes no grafo: \n");
-	
+
+		OrdenarArestas(G);
+
 		for (i = 0;i < _QTD_ARESTAS; i++)
 			ImprimeAresta(G->arestas[i]);
 

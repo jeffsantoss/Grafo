@@ -13,6 +13,6 @@ void main() {
 	Menu(grafo);
 
 	printf("Programa abortado!");
-
+	
 	getch();
 }

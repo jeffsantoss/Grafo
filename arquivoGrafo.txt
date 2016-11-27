@@ -12,27 +12,27 @@ CV v11
 CV v12
 CV v13
 CV v14
-CA a1 v1 v5 5 
-CA a2 v1 v6 1
+CA a7 v3 v4 3
+CA a9 v3 v7 5
 CA a3 v1 v12 2
 CA a4 v2 v3 11
 CA a5 v2 v5 1
 CA a6 v2 v9 9
-CA a7 v3 v4 3
+CA a1 v1 v5 5 
 CA a8 v3 v6 3
-CA a9 v3 v7 5
+CA a2 v1 v6 1
 CA a10 v3 v10 6
-CA a11 v4 v7 4
+CA a11 v4 v1 4
 CA a12 v4 v14 5
 CA a13 v5 v8 8
 CA a14 v6 v7 1
-CA a15 v6 v9 6
+CA a15 v6 v9 10
 CA a16 v6 v13 4
 CA a17 v8 v9 10
-CA a18 v8 v13 7,5
+CA a18 v8 v13 4
 CA a19 v10 v11 13
 CA a20 v10 v12 8
 CA a21 v11 v13 9
 CA a22 v11 v14 6
+CM v1 v14
 IG 
-CM v1 v2 

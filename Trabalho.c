@@ -95,7 +95,7 @@ void LerComando(Grafo *grafo, char *comando) {
 		const char *valorinserido = strtok(NULL, " ");
 
 		if (VerticeExiste(grafo, valorinserido)) {
-			printf("Vertice ja existente\n");
+			printf("Vertice (%s) ja existente\n", valorinserido);
 			return;
 		}
 
@@ -112,7 +112,7 @@ void LerComando(Grafo *grafo, char *comando) {
 		Vertice *verticeremovido = GetVerticePorChave(grafo, valorremovido);
 
 		if (verticeremovido == NULL) {
-			printf("Vertice nao encontrado");
+			printf("Vertice (%s) nao encontrado", valorremovido);
 			return;
 		}
 
@@ -129,7 +129,7 @@ void LerComando(Grafo *grafo, char *comando) {
 		Aresta *arestaremovida = GetArestaPorChave(grafo, valorremovido);
 
 		if (arestaremovida == NULL) {
-			printf("\nAresta nao encontrada");
+			printf("\nAresta (%s) nao encontrada", arestaremovida);
 			return;
 		}
 
@@ -149,10 +149,15 @@ void LerComando(Grafo *grafo, char *comando) {
 		Vertice *VerticeDest = GetVerticePorChave(grafo, verticeDestino);
 
 
-		if (VerticeOrig == NULL || VerticeDest == NULL) {
-			printf("\nVertices nao encontrados!");
+		if (VerticeOrig == NULL) {
+			printf("\nVertice (%s) nao encontrados!", verticeOrigem);
 			return;
 		}
+		else if (VerticeDest == NULL) {
+			printf("\nVertice (%s) nao encontrados!", verticeDestino);
+			return;
+		}
+
 		else if (ArestaExiste(grafo, valoreinserido)) {
 			printf("\nAresta ja existente");
 			return;
@@ -239,8 +244,7 @@ void LerComando(Grafo *grafo, char *comando) {
 			"de identificador v1 e o vertice de identificador v2. "
 			"\n\n \t\t    FM Termina a execucao do seu programa e destroi o grafo "
 			"\n\n \t\t    exit retorna ao menu");
-
-
+			return;
 	}
 
 	printf("Comando invalido!");
@@ -274,10 +278,13 @@ int Arquivo(Grafo *grafo) {
 			LerComando(grafo, info);
 		}
 
+		printf("\n\t  >> ARQUIVO LIDO COM SUCESSO ! \n", nomeArquivo);
+
+
 
 	fclose(arq);
 
-	system("pause");
+	getch();
 
 	return Menu(grafo);
 }
