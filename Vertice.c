@@ -16,8 +16,7 @@ struct vertice
 Vertice* newVertice(char *chave)
 {
 	Vertice *vertice = (Vertice*)malloc(sizeof(Vertice));
-
-	vertice->chave = (char*)malloc(20*sizeof(chave));
+	vertice->chave = (char*)malloc(strlen(chave)*sizeof(chave));
 
 	strcpy(vertice->chave,chave);
 	vertice->peso = INFINITY;

@@ -83,7 +83,13 @@ void LerComando(Grafo *grafo, char *comando) {
 	char *syntax;
 
 	if (comando[strlen(comando) - 1] = '\n');
-	comando[strlen(comando) - 1] = '\0';
+			comando[strlen(comando) - 1] = '\0';
+
+	/*
+	 Strtok guarda na primeira chamada uma variável estática a qual ele vai apontar
+	 nas próximas chamada, se for passado como parâmetro nulo vai continuar na mesma chamada
+	 até ser passado outro ponteiro pra char.
+	*/
 
 	syntax = strtok(comando, " ");
 
@@ -301,11 +307,12 @@ void Comando(Grafo *grafo) {
 
 		printf("\n \t Comando >> ");
 
-		fgets(entrada, 20, stdin);
+		fgets(entrada, 50, stdin);
 
 		LerComando(grafo, entrada);
 
 		getch();
+
 
 	}
 }

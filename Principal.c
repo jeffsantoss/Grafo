@@ -3,7 +3,8 @@
 #include "Grafo.h"
 #include "Trabalho.h"
 
-void main() {
+void main() 
+{
 
 	system("color 0A");
 	system("title Estrutura de dados Grafo");

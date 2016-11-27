@@ -131,13 +131,9 @@ void RemoverVertice(Grafo *G, Vertice *V) {
 	for (int j = 0; j < _QTD_ARESTAS; j++) {
 
 		Vertice **org_dest = VerticeOrgDest(G->arestas[j]);
-
-
-
 		if (org_dest[_VERTICE_ORIG] == V || org_dest[_VERTICE_DEST] == V) {
 
-			printf("\n >> Aresta (%s) tambem foi excluida por coincidir no vertice (%s) ",
-				ChaveAresta(G->arestas[j]),ChaveVertice(V));
+			printf("\n >> Aresta (%s) tambem foi excluida por coincidir no vertice (%s) ", ChaveAresta(G->arestas[j]),ChaveVertice(V));
 
 				RemoverAresta(G, G->arestas[j]);
 		}
@@ -145,6 +141,7 @@ void RemoverVertice(Grafo *G, Vertice *V) {
 	}
 
 	for (int i = 0; i < _QTD_VERTICES; i++) {
+
 		if (G->vertices[i] == V) {
 
 			// Ajustando a quantidade de aresta.
@@ -152,6 +149,7 @@ void RemoverVertice(Grafo *G, Vertice *V) {
 				G->vertices[j] = G->vertices[j + 1];
 
 			--_QTD_VERTICES;
+
 				G->vertices[_QTD_VERTICES] = NULL;
 					break;
 		}
