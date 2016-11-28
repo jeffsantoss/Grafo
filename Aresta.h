@@ -17,5 +17,4 @@ char*		ChaveAresta(Aresta *aresta);
 Vertice**	VerticeOrgDest(Aresta *aresta);
 void		ImprimeAresta(Aresta *aresta);
 
-
 #endif

@@ -18,10 +18,10 @@ Vertice* newVertice(char *chave)
 	Vertice *vertice = (Vertice*)malloc(sizeof(Vertice));
 	vertice->chave = (char*)malloc(strlen(chave)*sizeof(chave));
 
-	strcpy(vertice->chave,chave);
+	strcpy(vertice->chave, chave);
 	vertice->peso = INFINITY;
 	vertice->pred = NULL;
-	
+
 	return vertice;
 }
 
@@ -51,7 +51,7 @@ float PesoVertice(Vertice *v)
 		return v->peso;
 }
 
-void setPesoVertice(Vertice *v,float peso) {
+void setPesoVertice(Vertice *v, float peso) {
 	if (v == NULL)
 		return;
 	else
@@ -65,7 +65,7 @@ Vertice* getPredecessor(Vertice *v) {
 	return v->pred;
 }
 
-void setPredecessor(Vertice *v,Vertice *pred) {
+void setPredecessor(Vertice *v, Vertice *pred) {
 	if (v == NULL)
 		return;
 

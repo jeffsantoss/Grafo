@@ -38,6 +38,7 @@ Aresta* newAresta(char *chave, Vertice *v1, Vertice *v2, float peso)
 	return aresta;
 }
 
+
 void DestruirAresta(Aresta *aresta)
 {
 	free(aresta->vertices);

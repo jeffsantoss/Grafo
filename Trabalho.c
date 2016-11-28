@@ -31,10 +31,7 @@ void Relaxamento(Grafo *grafo, Vertice *org, Vertice *dest) {
 
 void CaminhoMinimo(Grafo *grafo, Vertice *org, Vertice *dest) {
 
-	int i = 0,
-		j = 0,
-		k = 0,
-		z = 0;
+	int CMindex = 0;
 
 	Vertice **CaminhoMinimo = (Vertice**)malloc(Qtd_Vertices() * sizeof(Vertice*));
 	Aresta  **arestasGrafo = GetArestas(grafo);
@@ -42,9 +39,9 @@ void CaminhoMinimo(Grafo *grafo, Vertice *org, Vertice *dest) {
 
 	setPesoVertice(org, 0);
 
-	for (i = 0; i < Qtd_Vertices() - 1; i++)
+	for (int i = 0; i < Qtd_Vertices() - 1; i++)
 
-		for (j = 0; j < Qtd_Arestas(); j++) {
+		for (int j = 0; j < Qtd_Arestas(); j++) {
 
 			Vertice **vertices = VerticeOrgDest(arestasGrafo[j]);
 
@@ -55,24 +52,22 @@ void CaminhoMinimo(Grafo *grafo, Vertice *org, Vertice *dest) {
 
 	if (isinf(PesoVertice(dest)))
 	{
-		printf("Nao existe caminho\n");
+		printf("Caminho inexistente \n");
 		return;
 	}
 
 
 	while (aux != NULL) {
 
-		CaminhoMinimo[z] = aux;
+		CaminhoMinimo[CMindex] = aux;
 		aux = getPredecessor(aux);
-		z++;
+		CMindex++;
 
 	}
 
-	printf("\n >> Algoritmo utilizado - Beelman Ford");
-
 	printf("\n >> Menor caminho do vertice (%s) ao (%s): ", ChaveVertice(org), ChaveVertice(dest));
 
-	for (k = z - 1; k >= 0; k--) {
+	for (int k = CMindex - 1; k >= 0; k--) {
 		printf(" %s - ", ChaveVertice(CaminhoMinimo[k]));
 	}
 
@@ -81,7 +76,7 @@ void CaminhoMinimo(Grafo *grafo, Vertice *org, Vertice *dest) {
 
 }
 
-void resetar_CaminhoMinimo(Grafo *grafo)
+void RestaurarGrafo(Grafo *grafo)
 {
 	int i, no_qtd = Qtd_Vertices(grafo);
 
@@ -104,7 +99,7 @@ void LerComando(Grafo *grafo, char *comando) {
 	char *syntax;
 
 	if (comando[strlen(comando) - 1] = '\n');
-			comando[strlen(comando) - 1] = '\0';
+	comando[strlen(comando) - 1] = '\0';
 
 	/*
 	 Strtok guarda na primeira chamada uma variável estática a qual ele vai apontar
@@ -184,17 +179,22 @@ void LerComando(Grafo *grafo, char *comando) {
 			return;
 		}
 
-		else if (ArestaExiste(grafo, valoreinserido)) {
-			printf("\nAresta ja existente");
-			return;
-		}
 
 		Aresta *aresta = newAresta(valoreinserido, VerticeOrig, VerticeDest, (float)atof(arestaPeso));
 
+		if (ArestaExiste(grafo, aresta)) {
 
-		InserirAresta(grafo, aresta);
+			printf(" ERRO ao inserir aresta (%s) ! \n", valoreinserido);
+			DestruirAresta(aresta);
 
-		printf("\n >> Aresta (%s) com peso (%.1f) coicidindo os vertices (%s) e (%s) "
+			return;
+		}
+		else 
+		{
+			InserirAresta(grafo, aresta);
+		}
+
+		printf("\n >> Aresta (%s) com peso (%.1f) coincidindo os vertices (%s) e (%s) "
 			"inserido no grafo com sucesso! \n",
 			valoreinserido, (float)atof(arestaPeso),
 			verticeOrigem, verticeDestino);
@@ -224,7 +224,7 @@ void LerComando(Grafo *grafo, char *comando) {
 
 		setPesoAresta(aresta, (float)atof(novoPesoAresta));
 
-		printf("Peso (%f) da aresta (%s) alterado para (%f)",
+		printf("\n >> Peso (%.1f) da aresta (%s) alterado para (%.1f)",
 			pesoantigo, valorAresta, PesoAresta(aresta));
 
 		return;
@@ -242,9 +242,12 @@ void LerComando(Grafo *grafo, char *comando) {
 			return;
 		}
 
-		resetar_CaminhoMinimo(grafo);
 
 		CaminhoMinimo(grafo, VerticeOrig, VerticeDest);
+
+
+		RestaurarGrafo(grafo);
+
 
 		return;
 	}
@@ -273,7 +276,7 @@ void LerComando(Grafo *grafo, char *comando) {
 			"de identificador v1 e o vertice de identificador v2. "
 			"\n\n \t\t    FM Termina a execucao do seu programa e destroi o grafo "
 			"\n\n \t\t    exit retorna ao menu");
-			return;
+		return;
 	}
 
 	printf("Comando invalido!");
@@ -303,11 +306,11 @@ int Arquivo(Grafo *grafo) {
 
 		printf("\n\t  >> LENDO ARQUIVO %s.. \n", nomeArquivo);
 
-		while ((fgets(info, sizeof(info), arq)) != NULL) {
-			LerComando(grafo, info);
-		}
+	while ((fgets(info, sizeof(info), arq)) != NULL) {
+		LerComando(grafo, info);
+	}
 
-		printf("\n\t  >> ARQUIVO LIDO COM SUCESSO ! \n", nomeArquivo);
+	printf("\n\t  >> ARQUIVO LIDO COM SUCESSO ! \n", nomeArquivo);
 
 
 
@@ -347,7 +350,7 @@ int Menu(Grafo *grafo) {
 	system("cls");
 
 	printf("\t |================== DESENVOLVEDORES: JEFFERSON SANTOS & ARTUR LIMA  ========================|\n"
-	    "\t |=============================  FACULDADE FARIAS BRITO =====================================|\n"
+		"\t |=============================  FACULDADE FARIAS BRITO =====================================|\n"
 		"\t |==============================  ESTRUTURA DE DADOS II  ====================================|\n"
 		"\t |=====================================  GRAFOS  ============================================|\n");
 

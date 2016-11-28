@@ -3,7 +3,7 @@
 #include "Grafo.h"
 #include "Trabalho.h"
 
-void main() 
+void main()
 {
 
 	system("color 0A");
@@ -14,6 +14,6 @@ void main()
 	Menu(grafo);
 
 	printf("Programa abortado!");
-	
+
 	getch();
 }
