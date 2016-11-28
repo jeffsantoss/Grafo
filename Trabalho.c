@@ -3,11 +3,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <math.h>
 #include "Aresta.h"
 #include "Vertice.h"
 #include "Grafo.h"
 
-#define _VERTICE_ORIG 0
+#define _VERTICE_ORIG 0	
 #define _VERTICE_DEST 1
 #define _SIZE_FILE 9999
 
@@ -52,6 +53,13 @@ void CaminhoMinimo(Grafo *grafo, Vertice *org, Vertice *dest) {
 		}
 
 
+	if (isinf(PesoVertice(dest)))
+	{
+		printf("Nao existe caminho\n");
+		return;
+	}
+
+
 	while (aux != NULL) {
 
 		CaminhoMinimo[z] = aux;
@@ -71,6 +79,19 @@ void CaminhoMinimo(Grafo *grafo, Vertice *org, Vertice *dest) {
 
 	printf("\n >> Custo: ( %.2f ) \n", PesoVertice(dest));
 
+}
+
+void resetar_CaminhoMinimo(Grafo *grafo)
+{
+	int i, no_qtd = Qtd_Vertices(grafo);
+
+	Vertice **vertices = GetVertices(grafo);
+
+	for (i = 0; i < no_qtd; i++)
+	{
+		setPesoVertice(vertices[i], INFINITY);
+		setPredecessor(vertices[i], NULL);
+	}
 }
 
 void LerComando(Grafo *grafo, char *comando) {
@@ -135,7 +156,7 @@ void LerComando(Grafo *grafo, char *comando) {
 		Aresta *arestaremovida = GetArestaPorChave(grafo, valorremovido);
 
 		if (arestaremovida == NULL) {
-			printf("\nAresta (%s) nao encontrada", arestaremovida);
+			printf("\nAresta (%s) nao encontrada", valorremovido);
 			return;
 		}
 
@@ -153,7 +174,6 @@ void LerComando(Grafo *grafo, char *comando) {
 
 		Vertice *VerticeOrig = GetVerticePorChave(grafo, verticeOrigem);
 		Vertice *VerticeDest = GetVerticePorChave(grafo, verticeDestino);
-
 
 		if (VerticeOrig == NULL) {
 			printf("\nVertice (%s) nao encontrados!", verticeOrigem);
@@ -184,6 +204,7 @@ void LerComando(Grafo *grafo, char *comando) {
 	else if (!strcmp(syntax, "IG")) {
 
 		ImprimeGrafo(grafo);
+		//teste(grafo);
 
 		return;
 
@@ -220,6 +241,8 @@ void LerComando(Grafo *grafo, char *comando) {
 			printf("Um dos vertices nao encontrados!");
 			return;
 		}
+
+		resetar_CaminhoMinimo(grafo);
 
 		CaminhoMinimo(grafo, VerticeOrig, VerticeDest);
 
