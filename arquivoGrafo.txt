@@ -1,19 +1,36 @@
-CV v1
-CV v6
-CV v5
-CV v7
-CV v2
-CV v4
-CV v3
-CA e1 v1 v2 6
-CA e2 v1 v7 5
-CA e3 v1 v4 1
-CA e4 v2 v3 12
-CA e5 v2 v7 3
-CA e6 v3 v7 6
-CA e7 v6 v3 3
-CA e8 v7 v5 1
-CA e9 v7 v4 3
-CA e10 v6 v7 10
-CA e11 v6 v5 8
-CA e12 v5 v4 10 
+CV A 
+CV B
+CV C
+CV D
+CV E
+CV F
+CV G
+CV H 
+CV I 
+CV J
+CV K
+CV L
+CV M
+CV N
+CA aresta_A_E A E 5 
+CA aresta_A_F A F 1
+CA aresta_A_L A L 2
+CA areta_B_C B C 11
+CA aresta_B_E B E 1
+CA aresta_B_I B I 9
+CA aresta_C_D C D 3
+CA aresta_C_F C F 3
+CA aresta_C_G C G 5
+CA aresta_C_J C J 6
+CA aresta_D_G D G 4
+CA aresta_D_N D N 5
+CA aresta_E_H E H 8
+CA aresta_F_G F G 1
+CA aresta_F_I F I 6
+CA aresta_F_M F M 4
+CA aresta_H_I H I 10
+CA aresta_H_M H M 7
+CA aresta_J_K J K 13
+CA aresta_J_L J L 8
+CA aresta_K_M K M 9
+CA aresta_K_N K N 6 

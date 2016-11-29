@@ -55,7 +55,13 @@ void CaminhoMinimo(Grafo *grafo, Vertice *org, Vertice *dest) {
 		printf("Caminho inexistente \n");
 		return;
 	}
-
+	
+	/*
+	else if (PesoVertice(dest) < 0) {
+		printf("Houve um clico negativo \n");
+		return;
+	}
+	*/
 
 	while (aux != NULL) {
 

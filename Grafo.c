@@ -85,9 +85,19 @@ void InserirVertice(Grafo *G, Vertice *v)
 	if (VerticeExiste(G, ChaveVertice(v)))
 		return;
 
+	Vertice **novo = G->vertices;
+
 	if (_QTD_VERTICES == _QTD_MAX_VERTICES)
 	{
-		G->vertices = (Vertice**)realloc(G->vertices, _QTD_MAX_VERTICES * 4 * sizeof(Vertice*));
+		novo = (Vertice**)realloc(novo, _QTD_MAX_VERTICES * 4 * sizeof(Vertice*));
+
+		if (novo == NULL) {
+			printf("Falha em realocar a memoria dos vertices do grafo");
+			return;
+		}
+
+		G->vertices = novo;
+
 
 		_QTD_MAX_VERTICES *= 4;
 	}
@@ -101,9 +111,18 @@ void InserirAresta(Grafo *G, Aresta *aresta)
 	if (G == NULL || aresta == NULL)
 		return;
 
+	Aresta **novo = G->arestas;
+
 	if (_QTD_ARESTAS == _QTD_MAX_ARESTAS)
 	{
-		G->arestas = (Aresta**)realloc(G->arestas, _QTD_MAX_ARESTAS * 4 * sizeof(Aresta*));
+		novo = (Aresta**)realloc(novo, _QTD_MAX_ARESTAS * 4 * sizeof(Aresta*));
+
+		if (novo == NULL) {
+			printf("Falha em realocar a memoria dos vertices do grafo");
+			return;
+		}
+
+		G->arestas = novo;
 
 		_QTD_MAX_ARESTAS *= 4;
 	}
@@ -220,7 +239,7 @@ Vertice* GetVerticePorChave(Grafo *G, char *chave) {
 
 	if (chave == NULL) {
 		printf("chave nao encontrada");
-		return;
+		return NULL;
 	}
 
 	if (G != NULL) {
